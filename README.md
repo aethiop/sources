@@ -19,6 +19,7 @@ Use the CLI to validate a shelf and try its app-side search recipe:
 ```sh
 npm run test:source -- shelf.json 10.2307/3762753 --dry-run
 npm run test:source -- shelf.json sample --response examples/example.com.response.json
+npm run test:source -- shelf.json sample --response examples/metadata-only.response.json --inspect
 ```
 
 You can also test the raw GitHub copy after changes are pushed:
@@ -29,6 +30,11 @@ npm run test:source -- https://raw.githubusercontent.com/aethiop/sources/refs/he
 
 The CLI keeps the same gate as Pillcrow: search rows only count when they
 normalize to `id`, `title`, and a direct `https` book file.
+
+If a response says `Search returned no valid Pillcrow book rows`, run the same
+command with `--inspect`. The diagnostics will show whether `items` points to
+the wrong array or whether `fields.file` is resolving to metadata instead of a
+direct importable URL.
 
 ## Search
 
@@ -81,6 +87,9 @@ Rules from the Pillcrow app contract:
 - `search`, when present, is declarative JSON search: `url` is an HTTPS
   template, `items` is a JSON pointer to the result rows, and `fields` maps each
   row into a normal book entry.
+- Metadata-only rows are not importable. If an API returns file IDs, hashes, or
+  repository names instead of a direct HTTPS book URL, put a lawful normalizing
+  endpoint in front of it and point `fields.file` at that endpoint's URL field.
 
 When search returns a valid row, Pillcrow imports the selected book through the
 same reader pipeline used for files picked on-device.

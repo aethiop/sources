@@ -3,13 +3,15 @@
 import { readFile } from 'node:fs/promises';
 
 const args = process.argv.slice(2);
-const opts = { page: 1, limit: 10, dryRun: false, json: false, response: '' };
+const opts = { page: 1, limit: 10, dryRun: false, inspect: false, json: false, response: '' };
 const pos = [];
 
 for (let i = 0; i < args.length; i += 1) {
   const arg = args[i];
   if (arg === '--dry-run') {
     opts.dryRun = true;
+  } else if (arg === '--inspect') {
+    opts.inspect = true;
   } else if (arg === '--json') {
     opts.json = true;
   } else if (arg === '--page') {
@@ -40,6 +42,7 @@ try {
     search: shelf.search ? shelf.search.url : '',
     searchUrl: '',
     results: [],
+    diagnostics: [],
   };
 
   if (query) {
@@ -50,8 +53,17 @@ try {
       process.exit(0);
     }
     const body = opts.response ? await readFile(opts.response, 'utf8') : await readText(report.searchUrl);
-    report.results = searchWorks(shelf.search, body);
-    if (!report.results.length) fail('Search returned no valid Pillcrow book rows.');
+    const searched = searchWorks(shelf.search, body);
+    report.results = searched.results;
+    report.diagnostics = searched.diagnostics;
+    if (opts.inspect) {
+      print(report);
+      process.exit(report.results.length ? 0 : 1);
+    }
+    if (!report.results.length) {
+      print(report);
+      fail('Search returned no valid Pillcrow book rows.');
+    }
   }
 
   print(report);
@@ -63,11 +75,12 @@ function usage() {
   console.error(`Usage:
   node scripts/test-source.mjs <shelf-url-or-file> [query] [--page n] [--limit n]
   node scripts/test-source.mjs <shelf-url-or-file> [query] --dry-run
+  node scripts/test-source.mjs <shelf-url-or-file> [query] --inspect
   node scripts/test-source.mjs <shelf-file> [query] --response <json-file>
 
 Examples:
   node scripts/test-source.mjs shelf.json douglass
-  node scripts/test-source.mjs https://raw.githubusercontent.com/aethiop/sources/main/shelf.json douglass
+  node scripts/test-source.mjs https://raw.githubusercontent.com/aethiop/sources/refs/heads/main/shelf.json douglass
   node scripts/test-source.mjs examples/example.com.shelf.json 10.2307/3762753 --dry-run
   node scripts/test-source.mjs examples/example.com.shelf.json sample --response examples/example.com.response.json`);
   process.exit(1);
@@ -158,23 +171,57 @@ function searchUrl(recipe, value, page) {
 }
 
 function searchWorks(recipe, json) {
+  const diagnostics = [];
   let root;
   try {
     root = JSON.parse(json);
   } catch {
-    return [];
+    return { results: [], diagnostics: ['Response is not valid JSON.'] };
   }
+  diagnostics.push(`Response root is ${kind(root)}.`);
   const rows = at(root, recipe.items);
-  if (!Array.isArray(rows)) return [];
-  return rows.map((row) => work({
-    id: field(row, recipe.fields.id),
-    title: field(row, recipe.fields.title),
-    author: field(row, recipe.fields.author),
-    file: field(row, recipe.fields.file),
-    words: numberField(row, recipe.fields.words),
-    map: field(row, recipe.fields.map),
-    updated: field(row, recipe.fields.updated),
-  })).filter(Boolean);
+  if (!Array.isArray(rows)) {
+    diagnostics.push(`items "${recipe.items}" resolved to ${kind(rows)}, not an array.`);
+    const arrays = findArrays(root).slice(0, 8);
+    if (arrays.length) diagnostics.push('Candidate array pointers: ' + arrays.join(', '));
+    if (Array.isArray(root)) diagnostics.push('This response is a top-level array; the current Pillcrow source contract expects a JSON pointer to an array on an object, such as "/records".');
+    return { results: [], diagnostics };
+  }
+
+  diagnostics.push(`items "${recipe.items}" resolved to ${rows.length} row(s).`);
+  const results = [];
+  let dropped = 0;
+  rows.forEach((row, index) => {
+    const mapped = {
+      id: field(row, recipe.fields.id),
+      title: field(row, recipe.fields.title),
+      author: field(row, recipe.fields.author),
+      file: field(row, recipe.fields.file),
+      words: numberField(row, recipe.fields.words),
+      map: field(row, recipe.fields.map),
+      updated: field(row, recipe.fields.updated),
+    };
+    const item = work(mapped);
+    if (item) {
+      results.push(item);
+      return;
+    }
+    dropped += 1;
+    if (dropped <= 3) diagnostics.push(`Dropped row ${index}: ${rejectReason(mapped)}. Mapped id=${quote(mapped.id)}, title=${quote(mapped.title)}, file=${quote(mapped.file)}.`);
+  });
+
+  if (dropped) diagnostics.push(`Dropped ${dropped} row(s). Pillcrow requires id, title, and a direct https book file.`);
+  if (!results.length && rows.length) {
+    const first = rows.find((row) => row && typeof row === 'object') || rows[0];
+    const titles = findPointers(first, titleish).slice(0, 8);
+    const links = findPointers(first, directHttps).slice(0, 8);
+    const fileish = findPointers(first, fileishValueOrKey).slice(0, 8);
+    if (titles.length) diagnostics.push('First row title-like pointers: ' + titles.join(', '));
+    if (links.length) diagnostics.push('First row https value pointers: ' + links.join(', '));
+    if (fileish.length) diagnostics.push('First row file-like pointers: ' + fileish.join(', '));
+    if (!links.length) diagnostics.push('No direct https value was found in the first row; metadata-only APIs need a lawful normalized endpoint that returns the importable file URL.');
+  }
+  return { results, diagnostics };
 }
 
 function field(row, expr) {
@@ -210,6 +257,71 @@ function at(root, pointer) {
   return current;
 }
 
+function kind(value) {
+  if (Array.isArray(value)) return `array(${value.length})`;
+  if (value === null) return 'null';
+  return typeof value;
+}
+
+function quote(value) {
+  const textValue = String(value == null ? '' : value);
+  return JSON.stringify(textValue.length > 90 ? textValue.slice(0, 87) + '...' : textValue);
+}
+
+function rejectReason(mapped) {
+  if (!mapped.id) return 'missing id';
+  if (!mapped.title) return 'missing title';
+  if (!mapped.file) return 'missing file';
+  if (!https(mapped.file)) return 'file is not a direct https URL';
+  return 'row did not match the Pillcrow book contract';
+}
+
+function findArrays(root) {
+  const out = [];
+  walk(root, '', 0, (value, pointer) => {
+    if (Array.isArray(value)) out.push(pointer || '');
+  });
+  return out;
+}
+
+function findPointers(root, keep) {
+  const out = [];
+  walk(root, '', 0, (value, pointer, key) => {
+    if (keep(value, key, pointer)) out.push(pointer || '');
+  });
+  return out;
+}
+
+function walk(value, pointer, depth, visit) {
+  if (depth > 5 || value == null) return;
+  visit(value, pointer, pointer.split('/').pop() || '');
+  if (Array.isArray(value)) {
+    value.slice(0, 5).forEach((item, index) => walk(item, `${pointer}/${index}`, depth + 1, visit));
+    return;
+  }
+  if (typeof value === 'object') {
+    Object.keys(value).slice(0, 40).forEach((key) => {
+      walk(value[key], `${pointer}/${escapePointer(key)}`, depth + 1, visit);
+    });
+  }
+}
+
+function escapePointer(value) {
+  return String(value).replace(/~/g, '~0').replace(/\//g, '~1');
+}
+
+function titleish(value, key) {
+  return /title|name/i.test(key) && (typeof value === 'string' || typeof value === 'number');
+}
+
+function directHttps(value) {
+  return typeof value === 'string' && value.startsWith('https://');
+}
+
+function fileishValueOrKey(value, key) {
+  return /file|epub|download|url|md5|hash/i.test(key) && (typeof value === 'string' || typeof value === 'number');
+}
+
 function print(report) {
   if (opts.json) {
     console.log(JSON.stringify(report, null, 2));
@@ -220,6 +332,10 @@ function print(report) {
   console.log(`Static books: ${report.books}`);
   if (report.search) console.log(`Search recipe: ${report.search}`);
   if (report.searchUrl) console.log(`Search URL: ${report.searchUrl}`);
+  if (report.diagnostics.length) {
+    console.log('Diagnostics:');
+    report.diagnostics.forEach((line) => console.log(`- ${line}`));
+  }
   if (report.results.length) {
     console.log(`Results: ${report.results.length}`);
     report.results.slice(0, opts.limit).forEach((book, index) => {

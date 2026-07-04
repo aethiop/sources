@@ -1,0 +1,20 @@
+{
+  "records": [
+    {
+      "id": 42,
+      "title": "Metadata Only Sample",
+      "authors": [
+        {
+          "name": "Example Author"
+        }
+      ],
+      "files": [
+        {
+          "md5": "0123456789abcdef0123456789abcdef",
+          "extension": "epub",
+          "filesize": 1234567
+        }
+      ]
+    }
+  ]
+}
