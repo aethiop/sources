@@ -7,7 +7,7 @@ Pillcrow shelf manifests.
 Add this search-only source link in Pillcrow:
 
 ```text
-https://raw.githubusercontent.com/aethiop/sources/main/shelf.json
+https://raw.githubusercontent.com/aethiop/sources/refs/heads/main/shelf.json
 ```
 
 `repo.json` carries the same manifest for older shared links.
@@ -24,7 +24,7 @@ npm run test:source -- shelf.json sample --response examples/example.com.respons
 You can also test the raw GitHub copy after changes are pushed:
 
 ```sh
-npm run test:source -- https://raw.githubusercontent.com/aethiop/sources/main/shelf.json 10.2307/3762753 --dry-run
+npm run test:source -- https://raw.githubusercontent.com/aethiop/sources/refs/heads/main/shelf.json 10.2307/3762753 --dry-run
 ```
 
 The CLI keeps the same gate as Pillcrow: search rows only count when they
