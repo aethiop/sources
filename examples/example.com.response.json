@@ -1,18 +1,11 @@
 {
-  "records": [
+  "results": [
     {
-      "id": 3762753,
-      "title": "Research API Sample",
-      "authors": [
-        {
-          "name": "Example Author"
-        }
-      ],
-      "files": [
-        {
-          "epub": "https://example.com/books/research-api-sample.epub"
-        }
-      ]
+      "id": "example-2701",
+      "title": "Moby-Dick; or, The Whale",
+      "author": "Herman Melville",
+      "words": 206000,
+      "file": "https://example.com/books/moby-dick.epub"
     }
   ]
 }

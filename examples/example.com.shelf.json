@@ -1,19 +1,20 @@
 {
   "pillcrowShelf": 1,
-  "name": "Example.com Research Source",
+  "name": "Example.com Search Source",
   "home": "example.com",
-  "about": "A placeholder source template for an HTTPS JSON API. Replace example.com with an API host you are allowed to use.",
+  "about": "A placeholder source template for a title-search HTTPS JSON API. Replace example.com with an API host you are allowed to use.",
   "books": [],
   "search": {
     "version": 1,
     "format": "json",
-    "url": "https://example.com/json.php?object=e&doi={query}&fields=title&addkeys=*&page={page}",
-    "items": "/records",
+    "url": "https://example.com/api/books?search={query}&page={page}",
+    "items": "/results",
     "fields": {
-      "id": "example-{id}",
+      "id": "/id",
       "title": "/title",
-      "author": "/authors/0/name",
-      "file": "/files/0/epub"
+      "author": "/author",
+      "file": "/file",
+      "words": "/words"
     }
   }
 }

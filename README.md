@@ -17,15 +17,15 @@ https://raw.githubusercontent.com/aethiop/sources/refs/heads/main/shelf.json
 Use the CLI to validate a shelf and try its app-side search recipe:
 
 ```sh
-npm run test:source -- shelf.json 10.2307/3762753 --dry-run
-npm run test:source -- shelf.json sample --response examples/example.com.response.json
-npm run test:source -- shelf.json sample --response examples/metadata-only.response.json --inspect
+npm run test:source -- shelf.json "moby dick" --dry-run
+npm run test:source -- shelf.json "moby dick" --response examples/example.com.response.json
+npm run test:source -- shelf.json "moby dick" --response examples/metadata-only.response.json --inspect
 ```
 
 You can also test the raw GitHub copy after changes are pushed:
 
 ```sh
-npm run test:source -- https://raw.githubusercontent.com/aethiop/sources/refs/heads/main/shelf.json 10.2307/3762753 --dry-run
+npm run test:source -- https://raw.githubusercontent.com/aethiop/sources/refs/heads/main/shelf.json "moby dick" --dry-run
 ```
 
 The CLI keeps the same gate as Pillcrow: search rows only count when they
@@ -39,10 +39,11 @@ direct importable URL.
 ## Search
 
 The repo is intentionally search-only. The checked-in source uses
-`example.com` as the host placeholder and follows the `json.php` API shape:
+`example.com` as the host placeholder and follows a title-search normalizer
+shape:
 
 ```text
-https://example.com/json.php?object=e&doi={query}&fields=title&addkeys=*&page={page}
+https://example.com/api/books?search={query}&page={page}
 ```
 
 Pillcrow sends the query to the configured HTTPS JSON endpoint, reads rows from
@@ -64,13 +65,14 @@ optional `.bmap` companions, but it cannot run code on a reader's phone.
   "search": {
     "version": 1,
     "format": "json",
-    "url": "https://example.com/json.php?object=e&doi={query}&fields=title&addkeys=*&page={page}",
-    "items": "/records",
+    "url": "https://example.com/api/books?search={query}&page={page}",
+    "items": "/results",
     "fields": {
-      "id": "example-{id}",
+      "id": "/id",
       "title": "/title",
-      "author": "/authors/0/name",
-      "file": "/files/0/epub"
+      "author": "/author",
+      "file": "/file",
+      "words": "/words"
     }
   }
 }

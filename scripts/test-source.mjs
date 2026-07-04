@@ -79,10 +79,10 @@ function usage() {
   node scripts/test-source.mjs <shelf-file> [query] --response <json-file>
 
 Examples:
-  node scripts/test-source.mjs shelf.json douglass
-  node scripts/test-source.mjs https://raw.githubusercontent.com/aethiop/sources/refs/heads/main/shelf.json douglass
-  node scripts/test-source.mjs examples/example.com.shelf.json 10.2307/3762753 --dry-run
-  node scripts/test-source.mjs examples/example.com.shelf.json sample --response examples/example.com.response.json`);
+  node scripts/test-source.mjs shelf.json "moby dick"
+  node scripts/test-source.mjs https://raw.githubusercontent.com/aethiop/sources/refs/heads/main/shelf.json "moby dick"
+  node scripts/test-source.mjs examples/example.com.shelf.json "moby dick" --dry-run
+  node scripts/test-source.mjs examples/example.com.shelf.json "moby dick" --response examples/example.com.response.json`);
   process.exit(1);
 }
 
