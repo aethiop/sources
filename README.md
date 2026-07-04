@@ -1,4 +1,4 @@
-# Cinder Extensions
+# sources
 
 Community extension repository for the Cinder ebook reader.
 
@@ -44,7 +44,7 @@ Extensions are JavaScript plugins that add content sources to Cinder. They run i
 2. Tap + / Add Repository.
 3. Enter this repository URL:
    ```text
-   https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/repo.json
+   https://raw.githubusercontent.com/aethiop/sources/main/repo.json
    ```
 4. Browse and install extensions from the repository.
 
@@ -90,7 +90,7 @@ Add the extension to `repo.json` so Cinder can discover and install it:
   "version": "1.0.0",
   "description": "Short description",
   "contentType": "manga",
-  "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/my-source.js",
+  "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/my-source.js",
   "minCinderVersion": "2.0.0"
 }
 ```
@@ -260,4 +260,3 @@ cinder.log/warn/error(...)            // Extension logging
 ## License
 
 Extensions in this repository are provided as-is for educational purposes.
-

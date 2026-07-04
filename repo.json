@@ -1,6 +1,6 @@
 {
-  "name": "Cinder Test Extensions",
-  "author": "CinderDev",
+  "name": "sources",
+  "author": "aethiop",
   "extensions": [
     {
       "id": "asurascans",
@@ -8,7 +8,7 @@
       "version": "0.1.0-cinder",
       "description": "Read manga, manhwa, and manhua from Asura Scans.",
       "contentType": "manga",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/asurascans.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/asurascans.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "manga"
@@ -25,7 +25,7 @@
       "version": "0.1.0-cinder",
       "description": "Read manga, manhwa, manhua, and OEL from Atsumaru.",
       "contentType": "manga",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/atsumaru.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/atsumaru.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "manga"
@@ -43,7 +43,7 @@
       "version": "1.0.9",
       "description": "Search manga from MangaDex.org - free, community-run manga platform",
       "contentType": "manga",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/mangadex.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/mangadex.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "manga"
@@ -58,7 +58,7 @@
       "version": "1.0.19",
       "description": "Read Marvel, DC, Image and more comics - the largest western comics library",
       "contentType": "comics",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/readcomiconline.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/readcomiconline.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "comic"
@@ -73,7 +73,7 @@
       "version": "1.0.6",
       "description": "Read manga, manhwa, and manhua from WeebCentral.com",
       "contentType": "manga",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/weebcentral.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/weebcentral.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "manga"
@@ -90,7 +90,7 @@
       "version": "0.1.0-cinder",
       "description": "Read public, web-visible WEBTOON Originals and Canvas episodes.",
       "contentType": "manga",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/webtoons.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/webtoons.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "manga",
@@ -108,7 +108,7 @@
       "version": "4.0.11",
       "description": "Search and browse DownMagaz on device, then resolve issue links for PDF download.",
       "contentType": "magazine",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/downmagaz_device.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/downmagaz_device.js",
       "minCinderVersion": "2.0.0",
       "debridSupport": "required",
       "debridDescription": "Requires Debrid-Link",
@@ -122,7 +122,7 @@
       "version": "1.0.2",
       "description": "Search chaptered fiction from Royal Road and package it into EPUB for reading in Cinder.",
       "contentType": "books",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/royalroad.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/royalroad.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "webnovel",
@@ -139,7 +139,7 @@
       "version": "0.1.0-cinder",
       "description": "Search and read chaptered web novels from ReadNovelEU, the current wuxiaworld.eu destination.",
       "contentType": "books",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/readnovel.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/readnovel.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "webnovel",
@@ -159,7 +159,7 @@
       "version": "0.1.6-cinder",
       "description": "Search and build public chaptered web novels from NovelBin into EPUB on device. No debrid required.",
       "contentType": "books",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/novelbin.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/novelbin.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "webnovel",
@@ -179,7 +179,7 @@
       "version": "0.1.8-cinder",
       "description": "Search and build public chaptered web novels from Novel Fire into EPUB on device. No debrid required.",
       "contentType": "books",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/novelfire.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/novelfire.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "webnovel",
@@ -199,7 +199,7 @@
       "version": "0.1.2-cinder",
       "description": "Search and read public chaptered web novels from WebNovel. Locked chapters are not bypassed.",
       "contentType": "books",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/webnovel.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/webnovel.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "webnovel",
@@ -219,7 +219,7 @@
       "version": "0.1.2",
       "description": "Read public chaptered Re:Zero web novel fan translations from Witch Cult Translations and package arcs into EPUB on device. No debrid required.",
       "contentType": "books",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/witchculttranslation.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/witchculttranslation.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "webnovel",
@@ -236,7 +236,7 @@
       "version": "0.1.0-cinder",
       "description": "Search Sway Translations WordPress pages for EPUB/PDF downloads.",
       "contentType": "books",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/swaytranslations.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/swaytranslations.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "ebook",
@@ -253,7 +253,7 @@
       "version": "3.3.1",
       "description": "Read 600+ daily comic strips via ComicsRSS - GoComics, Comics Kingdom, Wumo, Life on Earth, and more.",
       "contentType": "comics",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/gocomics.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/gocomics.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "comic"
@@ -268,7 +268,7 @@
       "version": "0.1.2-cinder",
       "description": "Read western comics from ComicHubFree.",
       "contentType": "comics",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/comichubfree.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/comichubfree.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "comic"
@@ -283,7 +283,7 @@
       "version": "1.0.3-cinder",
       "description": "Read manga, manhwa, and manhua from BBato.",
       "contentType": "manga",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/bbato.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/bbato.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "manga"
@@ -300,7 +300,7 @@
       "version": "2.1.10",
       "description": "Anna's Archive direct downloader powered entirely by your device, with no backend infrastructure.",
       "contentType": "books",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/annas_archive.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/annas_archive.js",
       "minCinderVersion": "1.0.0",
       "contentTypes": [
         "ebook"
@@ -313,7 +313,7 @@
       "version": "0.1.3",
       "description": "Download-source extension for OceanofPDF with separate EPUB/PDF results and POST form downloads.",
       "contentType": "books",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/oceanofpdf.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/oceanofpdf.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "ebook"
@@ -326,7 +326,7 @@
       "version": "0.1.3",
       "description": "Direct download-source extension for LibGen.",
       "contentType": "books",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/libgen.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/libgen.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "ebook"
@@ -339,7 +339,7 @@
       "version": "0.1.0-cinder",
       "description": "Search ElScione's h5ai ebook and manga server for EPUB, PDF, CBZ, and CBR files.",
       "contentType": "books",
-      "scriptUrl": "https://raw.githubusercontent.com/TrexxyMon/Cinder-Extensions/main/elscione.js",
+      "scriptUrl": "https://raw.githubusercontent.com/aethiop/sources/main/elscione.js",
       "minCinderVersion": "2.0.0",
       "contentTypes": [
         "ebook",
