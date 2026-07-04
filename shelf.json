@@ -52,5 +52,17 @@
       "author": "W. E. B. Du Bois",
       "file": "https://www.gutenberg.org/ebooks/408.epub.images"
     }
-  ]
+  ],
+  "search": {
+    "version": 1,
+    "format": "json",
+    "url": "https://gutendex.com/books/?search={query}&page={page}",
+    "items": "/results",
+    "fields": {
+      "id": "gutenberg-{id}",
+      "title": "/title",
+      "author": "/authors/0/name",
+      "file": "/formats/application~1epub+zip"
+    }
+  }
 }

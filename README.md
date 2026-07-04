@@ -26,6 +26,10 @@ links. Pillcrow imports them through the normal book pipeline.
 - The Adventures of Sherlock Holmes
 - The Souls of Black Folk
 
+The shelf also declares app-side search. Pillcrow sends the query to the
+configured HTTPS JSON endpoint, reads rows from the configured JSON pointer, and
+keeps only results that resolve to a direct HTTPS EPUB.
+
 ## Shelf Format
 
 Pillcrow shelves are declarative JSON. A shelf can list downloadable books and
@@ -47,7 +51,19 @@ optional `.bmap` companions, but it cannot run code on a reader's phone.
       "map": "https://example.org/maps/middlemarch.bmap",
       "updated": "2026-05-01"
     }
-  ]
+  ],
+  "search": {
+    "version": 1,
+    "format": "json",
+    "url": "https://example.org/books?search={query}&page={page}",
+    "items": "/results",
+    "fields": {
+      "id": "catalog-{id}",
+      "title": "/title",
+      "author": "/authors/0/name",
+      "file": "/formats/application~1epub+zip"
+    }
+  }
 }
 ```
 
@@ -59,6 +75,9 @@ Rules from the Pillcrow app contract:
 - Every book needs `id`, `title`, and an `https` `file` URL.
 - `author`, `words`, `map`, and `updated` are optional.
 - `map`, when present, must also be an `https` URL.
+- `search`, when present, is declarative JSON search: `url` is an HTTPS
+  template, `items` is a JSON pointer to the result rows, and `fields` maps each
+  row into a normal book entry.
 
 Pillcrow imports every listed book through the same reader pipeline used for
 files picked on-device.
