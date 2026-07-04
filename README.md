@@ -12,6 +12,20 @@ https://raw.githubusercontent.com/aethiop/sources/main/shelf.json
 
 `repo.json` carries the same manifest for older shared links.
 
+## Books
+
+The main shelf is seeded with public-domain EPUBs delivered by direct HTTPS
+links. Pillcrow imports them through the normal book pipeline.
+
+- Narrative of the Life of Frederick Douglass, an American Slave
+- Middlemarch
+- Pride and Prejudice
+- Moby-Dick; or, The Whale
+- Frankenstein; Or, The Modern Prometheus
+- Jane Eyre
+- The Adventures of Sherlock Holmes
+- The Souls of Black Folk
+
 ## Shelf Format
 
 Pillcrow shelves are declarative JSON. A shelf can list downloadable books and
