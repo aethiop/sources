@@ -2,9 +2,9 @@
 
 Pillcrow shelf manifests.
 
-## Main Shelf
+## Main Source
 
-Add this shelf link in Pillcrow:
+Add this search-only source link in Pillcrow:
 
 ```text
 https://raw.githubusercontent.com/aethiop/sources/main/shelf.json
@@ -12,23 +12,36 @@ https://raw.githubusercontent.com/aethiop/sources/main/shelf.json
 
 `repo.json` carries the same manifest for older shared links.
 
-## Books
+## Test a Source
 
-The main shelf is seeded with public-domain EPUBs delivered by direct HTTPS
-links. Pillcrow imports them through the normal book pipeline.
+Use the CLI to validate a shelf and try its app-side search recipe:
 
-- Narrative of the Life of Frederick Douglass, an American Slave
-- Middlemarch
-- Pride and Prejudice
-- Moby-Dick; or, The Whale
-- Frankenstein; Or, The Modern Prometheus
-- Jane Eyre
-- The Adventures of Sherlock Holmes
-- The Souls of Black Folk
+```sh
+npm run test:source -- shelf.json 10.2307/3762753 --dry-run
+npm run test:source -- shelf.json sample --response examples/example.com.response.json
+```
 
-The shelf also declares app-side search. Pillcrow sends the query to the
-configured HTTPS JSON endpoint, reads rows from the configured JSON pointer, and
-keeps only results that resolve to a direct HTTPS EPUB.
+You can also test the raw GitHub copy after changes are pushed:
+
+```sh
+npm run test:source -- https://raw.githubusercontent.com/aethiop/sources/main/shelf.json 10.2307/3762753 --dry-run
+```
+
+The CLI keeps the same gate as Pillcrow: search rows only count when they
+normalize to `id`, `title`, and a direct `https` book file.
+
+## Search
+
+The repo is intentionally search-only. The checked-in source uses
+`example.com` as the host placeholder and follows the `json.php` API shape:
+
+```text
+https://example.com/json.php?object=e&doi={query}&fields=title&addkeys=*&page={page}
+```
+
+Pillcrow sends the query to the configured HTTPS JSON endpoint, reads rows from
+the configured JSON pointer, and keeps only results that resolve to a direct
+HTTPS EPUB.
 
 ## Shelf Format
 
@@ -41,27 +54,17 @@ optional `.bmap` companions, but it cannot run code on a reader's phone.
   "name": "Pillcrow Shelf",
   "home": "github.com/aethiop/sources",
   "about": "A short description shown before the shelf is added.",
-  "books": [
-    {
-      "id": "middlemarch",
-      "title": "Middlemarch",
-      "author": "George Eliot",
-      "words": 316000,
-      "file": "https://example.org/books/middlemarch.epub",
-      "map": "https://example.org/maps/middlemarch.bmap",
-      "updated": "2026-05-01"
-    }
-  ],
+  "books": [],
   "search": {
     "version": 1,
     "format": "json",
-    "url": "https://example.org/books?search={query}&page={page}",
-    "items": "/results",
+    "url": "https://example.com/json.php?object=e&doi={query}&fields=title&addkeys=*&page={page}",
+    "items": "/records",
     "fields": {
-      "id": "catalog-{id}",
+      "id": "example-{id}",
       "title": "/title",
       "author": "/authors/0/name",
-      "file": "/formats/application~1epub+zip"
+      "file": "/files/0/epub"
     }
   }
 }
@@ -79,5 +82,5 @@ Rules from the Pillcrow app contract:
   template, `items` is a JSON pointer to the result rows, and `fields` maps each
   row into a normal book entry.
 
-Pillcrow imports every listed book through the same reader pipeline used for
-files picked on-device.
+When search returns a valid row, Pillcrow imports the selected book through the
+same reader pipeline used for files picked on-device.

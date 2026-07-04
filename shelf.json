@@ -1,68 +1,19 @@
 {
   "pillcrowShelf": 1,
-  "name": "Pillcrow Public-Domain Shelf",
-  "home": "github.com/aethiop/sources",
-  "about": "Public-domain EPUBs that Pillcrow can import directly.",
-  "books": [
-    {
-      "id": "gutenberg-23",
-      "title": "Narrative of the Life of Frederick Douglass, an American Slave",
-      "author": "Frederick Douglass",
-      "file": "https://www.gutenberg.org/ebooks/23.epub.images"
-    },
-    {
-      "id": "gutenberg-145",
-      "title": "Middlemarch",
-      "author": "George Eliot",
-      "file": "https://www.gutenberg.org/ebooks/145.epub.images"
-    },
-    {
-      "id": "gutenberg-1342",
-      "title": "Pride and Prejudice",
-      "author": "Jane Austen",
-      "file": "https://www.gutenberg.org/ebooks/1342.epub.images"
-    },
-    {
-      "id": "gutenberg-2701",
-      "title": "Moby-Dick; or, The Whale",
-      "author": "Herman Melville",
-      "file": "https://www.gutenberg.org/ebooks/2701.epub.images"
-    },
-    {
-      "id": "gutenberg-84",
-      "title": "Frankenstein; Or, The Modern Prometheus",
-      "author": "Mary Wollstonecraft Shelley",
-      "file": "https://www.gutenberg.org/ebooks/84.epub.images"
-    },
-    {
-      "id": "gutenberg-1260",
-      "title": "Jane Eyre",
-      "author": "Charlotte Bronte",
-      "file": "https://www.gutenberg.org/ebooks/1260.epub.images"
-    },
-    {
-      "id": "gutenberg-1661",
-      "title": "The Adventures of Sherlock Holmes",
-      "author": "Arthur Conan Doyle",
-      "file": "https://www.gutenberg.org/ebooks/1661.epub.images"
-    },
-    {
-      "id": "gutenberg-408",
-      "title": "The Souls of Black Folk",
-      "author": "W. E. B. Du Bois",
-      "file": "https://www.gutenberg.org/ebooks/408.epub.images"
-    }
-  ],
+  "name": "Example.com Research Source",
+  "home": "example.com",
+  "about": "A search-only Pillcrow source template for an HTTPS JSON API.",
+  "books": [],
   "search": {
     "version": 1,
     "format": "json",
-    "url": "https://gutendex.com/books/?search={query}&page={page}",
-    "items": "/results",
+    "url": "https://example.com/json.php?object=e&doi={query}&fields=title&addkeys=*&page={page}",
+    "items": "/records",
     "fields": {
-      "id": "gutenberg-{id}",
+      "id": "example-{id}",
       "title": "/title",
       "author": "/authors/0/name",
-      "file": "/formats/application~1epub+zip"
+      "file": "/files/0/epub"
     }
   }
 }

@@ -1,0 +1,18 @@
+{
+  "records": [
+    {
+      "id": 3762753,
+      "title": "Research API Sample",
+      "authors": [
+        {
+          "name": "Example Author"
+        }
+      ],
+      "files": [
+        {
+          "epub": "https://example.com/books/research-api-sample.epub"
+        }
+      ]
+    }
+  ]
+}

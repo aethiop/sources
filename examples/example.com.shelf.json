@@ -2,7 +2,7 @@
   "pillcrowShelf": 1,
   "name": "Example.com Research Source",
   "home": "example.com",
-  "about": "A search-only Pillcrow source template for an HTTPS JSON API.",
+  "about": "A placeholder source template for an HTTPS JSON API. Replace example.com with an API host you are allowed to use.",
   "books": [],
   "search": {
     "version": 1,
