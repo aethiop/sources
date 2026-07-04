@@ -1,8 +1,0 @@
-{
-  "name": "@pillcrow/sources",
-  "private": true,
-  "type": "module",
-  "scripts": {
-    "test:source": "node scripts/test-source.mjs"
-  }
-}
